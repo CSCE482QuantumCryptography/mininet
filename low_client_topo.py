@@ -15,18 +15,14 @@ class MyTopo( Topo ):
         "Create custom topo."
 
         hosts = []
-
-        # Add hosts and switches
-        for k in range(10):
-            hosts.append(self.addHost('h' + str(k), cls=Host, ip='10.0.0.'+str(k+1)))
-
         sw = self.addSwitch( 'sw0' )
 
-        # Add links
-        for k in range(1, 10):
+        # Add hosts and links
+        for k in range(10):
+            hosts.append(self.addHost('h' + str(k), cls=Host, ip='10.0.0.'+str(k+1)))
             self.addLink(hosts[k], sw, cls=TCLink, delay="10ms")
+            
         
-        self.addLink(hosts[0], sw, cls=TCLink, delay="10ms")
         
 
 
@@ -39,15 +35,19 @@ def run():
     
     net.start()
 
+    proceed = input("ready to keep going?")
+
     for k in range(len(net.hosts)):
         set_env(net.hosts[k])
 
-    net.hosts[0].cmd("h0 cd server")
-    net.hosts[0].cmd("h0 ./server -src 10.0.0.1:9080")
+    net.hosts[0].cmd("cd server")
+    net.hosts[0].cmd("xterm -e ./server -src 10.0.0.1:9080 &")
 
-    for host in range(1, 10):
-        net.hosts[host].cmd(str(net.hosts[host]) + " cd client")
-        net.hosts[host].cmd(str(net.hosts[host]) + " ./client -dst 10.0.0.1:9080")
+    for k in range(1, len(net.hosts)):
+        net.hosts[k].cmd("cd client")
+        net.hosts[k].cmd("./client -dst 10.0.0.1:9080 &")
+        
+    CLI(net)
 
     net.stop()
 
