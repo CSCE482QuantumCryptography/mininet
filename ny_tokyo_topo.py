@@ -14,13 +14,13 @@ class MyTopo( Topo ):
         "Create custom topo."
 
         # Add hosts and switches
-        NY_host = self.addHost( 'NY_host', cls=Host, ip='10.0.0.1' )
-        Tokyo_host = self.addHost( 'Tokyo_host', cls=Host, ip='10.0.0.2' )
+        NY_host = self.addHost( 'h1', cls=Host, ip='10.0.0.1' )
+        Tokyo_host = self.addHost( 'h2', cls=Host, ip='10.0.0.2' )
         sw = self.addSwitch( 'sw2' )
 
         # Add links
-        self.addLink( NY_host, sw, cls=TCLink, delay="95ms")
-        self.addLink( sw, Tokyo_host, cls=TCLink, delay="95ms")
+        self.addLink( NY_host, sw, cls=TCLink, delay="95ms", loss=0.5)
+        self.addLink( sw, Tokyo_host, cls=TCLink, delay="95ms", loss=0.5)
     
 
 

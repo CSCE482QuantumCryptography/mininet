@@ -15,12 +15,12 @@ class MyTopo( Topo ):
 
         # Add hosts and switches
         h1 = self.addHost( 'h1', cls=Host, ip='10.0.0.1' )
-        satellite = self.addHost( 'satellite', cls=Host, ip='10.0.0.2' )
+        satellite = self.addHost( 'h2', cls=Host, ip='10.0.0.2' )
         sw = self.addSwitch( 'sw2' )
 
         # Add links
-        self.addLink( h1, sw, cls=TCLink, delay="300ms")
-        self.addLink( sw, satellite, cls=TCLink, delay="300ms")
+        self.addLink( h1, sw, cls=TCLink, delay="300ms", bw=450)
+        self.addLink( sw, satellite, cls=TCLink, delay="300ms", loss=5, bw=200)
     
 
 
