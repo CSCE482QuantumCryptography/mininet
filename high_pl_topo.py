@@ -8,7 +8,7 @@ from mininet.topo import Topo
 from set_env import set_env
 
 class MyTopo( Topo ):
-    "Topology example for host communicating to another host on a low noise connection, total packet loss ~1%"
+    "Topology example for host communicating to another host on a high noise connection, total packet loss ~10%"
 
     def build( self ):
         "Create custom topo."

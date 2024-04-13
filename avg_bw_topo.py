@@ -19,8 +19,8 @@ class MyTopo( Topo ):
         sw = self.addSwitch( 'sw2' )
 
         # Add links
-        self.addLink( h1, sw, cls=TCLink, delay="10ms", bw=200)
-        self.addLink( sw, h2, cls=TCLink, delay="10ms", bw=200)
+        self.addLink( h1, sw, cls=TCLink, delay="10ms", bw=200, loss=0.5)
+        self.addLink( sw, h2, cls=TCLink, delay="10ms", bw=200, loss=0.5)
     
 
 

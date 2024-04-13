@@ -8,19 +8,21 @@ from mininet.topo import Topo
 from set_env import set_env
 
 class MyTopo( Topo ):
-    "Topology example for New Yok host communicating to Tokyo host, total latency ~190ms."
+    "Topology example for host communicating to another host, switch bandwidth ~25Mpbs"
 
     def build( self ):
         "Create custom topo."
 
         # Add hosts and switches
-        NY_host = self.addHost( 'h1', cls=Host, ip='10.0.0.1' )
-        Tokyo_host = self.addHost( 'h2', cls=Host, ip='10.0.0.2' )
+        h1 = self.addHost( 'h1', cls=Host, ip='10.0.0.1' )
+        h2 = self.addHost( 'h2', cls=Host, ip='10.0.0.2' )
+        h3 = self.addHost( 'h3', cls=Host, ip='10.0.0.3' )
         sw = self.addSwitch( 'sw2' )
 
         # Add links
-        self.addLink( NY_host, sw, cls=TCLink, delay="95ms", loss=0.5)
-        self.addLink( sw, Tokyo_host, cls=TCLink, delay="95ms", loss=0.5)
+        self.addLink( h1, sw, cls=TCLink, delay="10ms")
+        self.addLink( sw, h2, cls=TCLink, delay="10ms")
+        self.addLink( h3, sw, cls=TCLink, delay="10ms")
     
 
 
@@ -35,6 +37,7 @@ def run():
 
     set_env(net.hosts[0])
     set_env(net.hosts[1])
+    set_env(net.hosts[2])
 
     CLI(net)
 
